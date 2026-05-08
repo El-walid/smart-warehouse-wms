@@ -1,4 +1,3 @@
-# database.py
 import sqlite3
 
 DB_NAME = "warehouse_tracking.db"
@@ -8,13 +7,13 @@ def init_db():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     
-    # Table 1: The Concept (Catalogue)
+    # Table 1: The Concept (Catalogue) - NOW WITH QUANTITY
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Catalogue_Produits (
             SKU_Base TEXT PRIMARY KEY,
             Designation TEXT,
             Image_Path TEXT,
-            Quantity Int
+            Quantity INTEGER DEFAULT 0
         )
     """)
     

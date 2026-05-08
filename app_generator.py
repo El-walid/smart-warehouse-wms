@@ -8,7 +8,7 @@ from database import init_db, DB_NAME
 # 1. Page Config MUST be the first Streamlit command
 st.set_page_config(page_title="Générateur d'Étiquettes", page_icon="🖨️", layout="wide")
 
-# 2. Initialize the database (Creates tables if they don't exist)
+# 2. Initialize the database
 init_db()
 
 # ---------------------------------------------------------
@@ -44,38 +44,39 @@ if submit_button and product_name and base_ref:
         product_img = Image.open(uploaded_image)
         product_img.thumbnail((150, 150))
     
-    # Open the vault to save the data
+    # Open the vault
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     
-    # Save the Product Concept to the Catalogue
+    # THE MAGIC FIX: Insert if new, ADD to total if it already exists
     cursor.execute("""
-        INSERT OR IGNORE INTO Catalogue_Produits (SKU_Base, Designation, Image_Path, Quantity)
-        VALUES (?, ?, ?)
-    """, (base_ref, product_name, "uploaded_image",quantity))
+        INSERT INTO Catalogue_Produits (SKU_Base, Designation, Image_Path, Quantity)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT(SKU_Base) DO UPDATE SET Quantity = Quantity + excluded.Quantity
+    """, (base_ref, product_name, "uploaded_image", quantity))
     
-    # Display the generated labels in a clean grid (4 columns wide)
+    # Display the generated labels in a clean grid
     cols = st.columns(4)
     today_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     for i in range(quantity):
-        # 1. Create the unique Serial ID with a timestamp to prevent duplicates
+        # Create unique ID
         unique_timestamp = datetime.now().strftime("%H%M%S")
         unique_id = f"{base_ref}-{unique_timestamp}-{i+1:03d}"
         
-        # 2. SAVE to the Physical Stock Database
+        # Save physical barcode
         cursor.execute("""
             INSERT INTO Stock_Physique (Code_Barre, SKU_Base, Date_Creation, Statut)
             VALUES (?, ?, ?, ?)
         """, (unique_id, base_ref, today_str, "En Stock"))
         
-        # 3. Generate the QR Code visual
+        # Generate visual QR Code
         qr = qrcode.QRCode(box_size=4, border=2)
         qr.add_data(unique_id)
         qr.make(fit=True)
         qr_img = qr.make_image(fill_color="black", back_color="white")
         
-        # 4. Render the Label in the Streamlit UI
+        # Render on screen
         col_index = i % 4
         with cols[col_index]:
             st.markdown(f"**{unique_id}**")
@@ -85,11 +86,10 @@ if submit_button and product_name and base_ref:
             st.caption(product_name[:20])
             st.divider()
 
-    # Commit the saves and close the vault
     conn.commit()
     conn.close()
 
-    st.success("✅ Toutes les étiquettes sont générées ET enregistrées dans la base de données locale !")
+    st.success("✅ Toutes les étiquettes sont générées ET la quantité totale est mise à jour !")
     
 elif submit_button:
     st.error("⚠️ Veuillez remplir au moins la Désignation et la Référence.")

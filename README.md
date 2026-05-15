@@ -40,7 +40,7 @@ A mobile-first application designed for the warehouse floor.
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/El-walid/smart-warehouse-wms.git](https://github.com/YOUR-USERNAME/smart-warehouse-wms.git)
+   git clone [https://github.com/El-walid/smart-warehouse-wms.git]
    cd smart-warehouse-wms
 
 2. Create and activate a virtual environment:

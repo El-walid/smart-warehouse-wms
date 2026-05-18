@@ -35,7 +35,7 @@ A mobile-first application designed for the warehouse floor.
 
 ### Prerequisites
 * Python 3.10+
-* A smartphone or webcam (for testing the scanner)
+* A smartphone or webcam for testing the scanner
 
 ### Installation
 1. Clone the repository:

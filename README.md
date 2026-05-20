@@ -78,9 +78,6 @@ streamlit run app_generator.py
 streamlit run app_scanner.py
 
 ```
-
----
-
 ## 👤 Author
 
 **El Walid El Alaoui Fels**

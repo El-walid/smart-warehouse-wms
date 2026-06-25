@@ -8,7 +8,7 @@
 ## 📋 Executive Summary
 A lightweight, mobile-first Warehouse Management System designed to bridge the gap between physical factory floors and digital databases. 
 
-Many industrial businesses lose thousands of dollars annually due to manual paper tracking, lost inventory, and data entry delays. This suite solves that by introducing **Digital Twins & Unique Serialization**. Every physical item generated receives a unique QR code (DNA), which is printed, attached to the physical object, and tracked in real-time via smartphone scanners.
+Many industrial businesses lose thousands of dollars annually due to manual paper tracking, lost inventory, and data entry delays. This suite solves that by introducing **Digital Twins & Unique Serialization**. Every physical item generated receives a unique QR code , which is printed, attached to the physical object, and tracked in real-time via smartphone scanners.
 
 ## 🏗️ System Architecture
 This system is built on a serverless, zero-configuration architecture, making it perfect for rapid deployment in industrial environments without requiring heavy IT infrastructure.

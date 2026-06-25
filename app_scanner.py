@@ -65,6 +65,10 @@ if scanned_code:
             st.write(f"**Code Unique:** {code}")
             st.write(f"**Modèle (SKU):** {sku}")
             st.write(f"**Date d'entrée:** {date_creation}")
+
+            cursor.execute("SELECT COUNT(*) FROM Stock_Physique WHERE SKU_Base = ? AND Statut = 'En Stock'", (sku,))
+            total_in_stock = cursor.fetchone()[0]
+            st.caption(f"📊 Il reste actuellement **{total_in_stock}** unités de ce modèle en stock.")
             
             if current_status == "En Stock":
                 st.info(f"📍 Statut Actuel : **{current_status}**")

@@ -12,7 +12,9 @@ def init_db():
         CREATE TABLE IF NOT EXISTS Catalogue_Produits (
             SKU_Base TEXT PRIMARY KEY,
             Designation TEXT,
-            Image_Path TEXT,
+            Categorie TEXT,
+            Prix_Unitaire REAL,
+            Image_Path TEXT,       
             Quantity INTEGER DEFAULT 0
         )
     """)

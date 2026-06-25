@@ -24,6 +24,8 @@ with st.form("label_form"):
     with col1:
         product_name = st.text_input("Désignation du Produit", placeholder="ex: Moteur Électrique 1.5cv")
         base_ref = st.text_input("Référence de Base (SKU)", placeholder="ex: MOT-150").strip().upper()
+        category = st.selectbox("Catégorie", ["Textile", "Électronique", "Mécanique", "Matière Première", "Autre"])
+        price = st.number_input("Prix Unitaire (MAD)", min_value=0.0, value=250.0, step=10.0)
         quantity = st.number_input("Quantité reçue", min_value=1, max_value=100, value=6)
     with col2:
         uploaded_image = st.file_uploader("Photo du produit (Optionnel)", type=["jpg", "jpeg", "png"])
@@ -43,10 +45,12 @@ if submit_button and product_name and base_ref:
     
     # Save to Catalogue
     cursor.execute("""
-        INSERT INTO Catalogue_Produits (SKU_Base, Designation, Image_Path, Quantity)
-        VALUES (?, ?, ?, ?)
-        ON CONFLICT(SKU_Base) DO UPDATE SET Quantity = Quantity + excluded.Quantity
-    """, (base_ref, product_name, "uploaded_image", quantity))
+        INSERT INTO Catalogue_Produits (SKU_Base, Designation, Categorie, Prix_Unitaire, Image_Path)
+        VALUES (?, ?, ?, ?, ?)
+        ON CONFLICT(SKU_Base) DO UPDATE SET 
+            Prix_Unitaire = excluded.Prix_Unitaire,
+            Categorie = excluded.Categorie
+    """, (base_ref, product_name, category, price, "uploaded_image"))
     
     cols = st.columns(4)
     today_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

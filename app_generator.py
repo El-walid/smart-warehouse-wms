@@ -28,7 +28,7 @@ with st.form("label_form"):
     with col2:
         uploaded_image = st.file_uploader("Photo du produit (Optionnel)", type=["jpg", "jpeg", "png"])
         
-    submit_button = st.form_submit_button("1. Générer & Sauvegarder", type="primary")
+    submit_button = st.form_submit_button("Générer & Sauvegarder", type="primary")
 
 # ---------------------------------------------------------
 # ⚙️ THE GENERATION, DB INSERTION, AND PDF ENGINE
@@ -128,14 +128,14 @@ if submit_button and product_name and base_ref:
         # Move X to the right for the next label
         x += label_w + x_space
 
-    # Convert the PDF to bytes for the Download Button
-    pdf_bytes = pdf.output(dest="S")
+    # Convert the PDF bytearray into strict bytes for Streamlit
+    pdf_bytes = bytes(pdf.output())
     
     st.success("✅ Étiquettes sauvegardées en base de données et prêtes pour l'impression !")
     
     # 3. The Physical Export Button
     st.download_button(
-        label="🖨️ 2. Télécharger la Planche PDF",
+        label="🖨️ Télécharger la Planche PDF",
         data=pdf_bytes,
         file_name=f"Etiquettes_{base_ref}_{today_str[:10]}.pdf",
         mime="application/pdf",

@@ -62,8 +62,6 @@ pip install -r requirements.txt
 
 ```
 
-
-
 *(Note: Ensure your `requirements.txt` includes `streamlit`, `qrcode`, `Pillow`, `fpdf2`, `streamlit-qrcode-scanner`, and `pandas`)*
 
 ### Running the Suite

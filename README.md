@@ -48,12 +48,10 @@ The strategic control tower for factory owners and managers.
    git clone (https://github.com/El-walid/smart-warehouse-wms.git)
    cd smart-warehouse-wms
 
-```
-
 2. Create and activate a virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate  # On Windows use: venv\Scripts\activate
 
 ```
 

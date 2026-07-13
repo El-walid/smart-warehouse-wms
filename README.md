@@ -94,6 +94,3 @@ streamlit run app_dashboard.py
 ## 👤 Author
 
 **El Walid El Alaoui Fels**
-
-* **Role:** Consultant in Data Engineering & Automation
-* **Focus:** Cloud Data Platforms, ETL Pipelines, and Business Process Automation
